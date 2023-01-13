@@ -1,20 +1,18 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const colores = {
-    borde: "#0075FF",
-    error: "#F66060",
-    exito: "#1ed12d"
+  borde: "#0075FF",
+  error: "#F66060",
+  exito: "#1ed12d"
 }
 
 const Formulario = styled.form`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr;
   gap: 20px;
 
-  @media (min-width: 800px) {
-    grid-template-columns: 1fr;
-  }
+  
 `;
 
 const Label = styled.label`
@@ -23,6 +21,10 @@ font-weight: 700;
 padding: 10px;
 min-height:40px;
 cursor: pointer;
+
+${props => props.valido === 'false' && css `
+  color:${colores.error}
+`}
 `;
 
 const GrupoInput = styled.div`
@@ -45,13 +47,31 @@ border: 3px solid transparent;
     outline: none;
     box-shadow: 3px 0px 30px rgba(163,163,163, 0,4);
 }
+${props => props.valido === 'true' && css `
+    border: 3px solid transparent;
+`}
+
+${props => props.valido === 'false' && css `
+    border: 3px solid ${colores.error} !important;
+`}
+
 `;
 
 const Error = styled.p`
 font-size:12px;
 margin-bottom:0 ;
 color: ${colores.error};
-display: none
+display: none;
+
+${props => props.valido === 'true' && css `
+    display: none;
+`}
+
+${props => props.valido === 'false' && css `
+    display:block;
+`}
+
+
 `;
 
 const IconoValidacion = styled(FontAwesomeIcon)`
@@ -61,6 +81,17 @@ bottom: 14px;
 z-index: 100;
 font-size: 16px;
 opacity: 0;
+
+${props => props.valido === 'false' && css `
+      opacity: 1;
+      color: ${colores.error};
+`}
+
+${props => props.valido === 'true' && css `
+      opacity: 1;
+      color: ${colores.exito};
+`}
+
 `;
 
 const ContenedorBoton = styled.div`
@@ -89,7 +120,6 @@ transition: .1s ease all;
 const MensajeExito = styled.p`
 font-size: 14px;
 color: ${colores.exito};
-display: none;
 `;
 
 const MensajeError = styled.div`
@@ -109,15 +139,15 @@ b{
 
 
 
-export{
-    Formulario,
-    Label,
-    GrupoInput,
-    Input,
-    Error,
-    IconoValidacion,
-    ContenedorBoton,
-    Boton,
-    MensajeExito,
-    MensajeError
+export {
+  Formulario,
+  Label,
+  GrupoInput,
+  Input,
+  Error,
+  IconoValidacion,
+  ContenedorBoton,
+  Boton,
+  MensajeExito,
+  MensajeError
 };
